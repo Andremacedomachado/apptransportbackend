@@ -30,39 +30,41 @@ model User {
 }
 
 model UsersRoles {
-  id String @id @unique @default(uuid())
-
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
-  role    Role   @relation(fields: [role_id], references: [id])
+  role    Roles  @relation(fields: [role_id], references: [id])
   role_id String
 
   createdat DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@id([user_id, role_id])
   @@map("users_roles")
 }
 
-model Role {
-  id String @id @unique @default(uuid())
-
-  name        String @unique
-  description String
-
-  createdat  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  usersRoles UsersRoles[]
-
-  @@map("roles")
-}
-
 model UserPermissions {
-  id          String      @id @default(uuid())
   user        User        @relation(fields: [user_id], references: [id])
   permissions Permissions @relation(fields: [permissions_id], references: [id])
 
   user_id        String
   permissions_id String
+
+  @@id([user_id, permissions_id])
+  @@map("user_permissions")
+}
+
+model Roles {
+  id String @id @unique @default(uuid())
+
+  name        String @unique
+  description String
+
+  createdat       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  usersRoles      UsersRoles[]
+  RolePermissions RolePermissions[]
+
+  @@map("roles")
 }
 
 model Permissions {
@@ -74,4 +76,20 @@ model Permissions {
   createdat       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   userPermissions UserPermissions[]
+  RolePermissions RolePermissions[]
+
+  @@map("permisssions")
+}
+
+model RolePermissions {
+  role        Roles       @relation(fields: [role_id], references: [id])
+  permissions Permissions @relation(fields: [permissions_id], references: [id])
+
+  createdat      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  role_id        String
+  permissions_id String
+
+  @@id([role_id, permissions_id])
+  @@map("role_permissions")
 }
