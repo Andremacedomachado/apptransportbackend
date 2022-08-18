@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { Roles } from '@prisma/client';
 import { prisma } from '../database';
 
 type IRoleData = {
@@ -6,25 +6,25 @@ type IRoleData = {
     description: string
 }
 export class CreateRoleService {
-    async execute({ name, description }: IRoleData): Promise<Error | Role> {
+    async execute({ name, description }: IRoleData): Promise<Error | Roles> {
 
-        const existRecord = await prisma.role.findFirst({
+        let role = await prisma.roles.findUnique({
             where: {
                 name,
             }
         });
 
-        if (existRecord) {
+        if (role) {
             return new Error('Record alright exists');
         }
 
-        const record = await prisma.role.create({
+        role = await prisma.roles.create({
             data: {
                 name,
                 description,
             }
         });
 
-        return record;
+        return role;
     }
 }

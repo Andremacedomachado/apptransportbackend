@@ -1,16 +1,17 @@
 import { Request, Response } from 'express';
+import { CreateRoleService } from '../services';
 
-import { CreateUserService, IUserData } from '../services/CreateUserService';
+import { CreateUserService } from '../services/CreateUserService';
 
 
 
-export class CreateUserController {
+export class CreateRoleController {
     async handle(request: Request, response: Response) {
 
-        const { name, email, password }: IUserData = request.body;
+        const { name, description } = request.body;
 
-        const createUserService = new CreateUserService();
-        const result = await createUserService.execute({ name, email, password });
+        const createRoleService = new CreateRoleService();
+        const result = await createRoleService.execute({ name, description });
 
         if (result instanceof Error) {
             return response.status(400).json(result.message);
