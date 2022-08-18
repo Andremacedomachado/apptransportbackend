@@ -3,7 +3,7 @@ import { hash } from 'bcryptjs';
 
 import { prisma } from '../database';
 
-type IUserData = {
+export type IUserData = {
     name: string,
     password: string,
     email: string
