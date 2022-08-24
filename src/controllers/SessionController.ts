@@ -5,7 +5,6 @@ export class SessionController {
     async handle(request: Request, response: Response) {
 
         const { email, password } = request.body;
-
         const sessionSevice = new SessionService();
         const result = await sessionSevice.execute({ email, password });
 
@@ -13,6 +12,6 @@ export class SessionController {
             return response.status(400).json(result.message);
         }
 
-        return response.send(result);
+        return response.json(result);
     }
 }

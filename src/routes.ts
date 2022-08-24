@@ -10,6 +10,7 @@ import {
     SessionController,
     CreateUserRolesControler,
 } from './controllers/index';
+import { UserController } from './controllers/UserController';
 
 const routes = Router();
 
@@ -23,8 +24,10 @@ routes.post('/roles', IsAuthenticated(), new CreateRoleController().handle);
 routes.post('/permissions', IsAuthenticated(), new CreatePermissionControler().handle);
 routes.post('/users', IsAuthenticated(), new CreateUserController().handle);
 
-routes.post('/roles/:roleId', IsAuthenticated(),  is(['admin']), new CreateRolePermissionsController().handle);
-routes.post('/users/userroles',  IsAuthenticated(), is(['super_admin']),new CreateUserRolesControler().handle);
+routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
+
+routes.post('/roles/:roleId', IsAuthenticated(), is(['admin']), new CreateRolePermissionsController().handle);
+routes.post('/users/userroles', IsAuthenticated(), is(['super_admin']), new CreateUserRolesControler().handle);
 
 
 export { routes };
