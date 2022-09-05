@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 
 import { IsAuthenticated, can, is } from './middlewares/index';
 import {
@@ -6,11 +6,11 @@ import {
     CreatePermissionControler,
     GetAllUsersController,
     CreateRoleController,
-    CreateUserController,
     SessionController,
     CreateUserRolesControler,
 } from './controllers/index';
 import { UserController } from './controllers/UserController';
+import { createUserController } from './application/usecases/createUser';
 
 const routes = Router();
 
@@ -22,7 +22,9 @@ routes.post('/login', new SessionController().handle);
 // rolas de criar tabelas de pontas 
 routes.post('/roles', IsAuthenticated(), new CreateRoleController().handle);
 routes.post('/permissions', IsAuthenticated(), new CreatePermissionControler().handle);
-routes.post('/users', IsAuthenticated(), new CreateUserController().handle);
+routes.post('/users', IsAuthenticated(), (req: Request, res: Response) => {
+    return createUserController.handle(req, res);
+});
 
 routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
 
