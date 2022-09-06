@@ -7,6 +7,7 @@ import {
 
 import { createUserController } from './application/usecases/createUser';
 import { createPermissionController } from './application/usecases/createPermission';
+import { createRoleController } from './application/usecases/createRole';
 
 const routes = Router();
 
@@ -16,12 +17,15 @@ const routes = Router();
 routes.post('/login', new SessionController().handle);
 
 // rolas de criar tabelas de pontas 
-// routes.post('/roles', IsAuthenticated(), new CreateRoleController().handle);
+
 routes.post('/permissions', IsAuthenticated(), (req: Request, res: Response) => {
     return createPermissionController.handle(req, res);
 });
 routes.post('/users', IsAuthenticated(), (req: Request, res: Response) => {
     return createUserController.handle(req, res);
+});
+routes.post('/roles', IsAuthenticated(), (req: Request, res: Response) => {
+    return createRoleController.handle(req, res);
 });
 
 // routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
