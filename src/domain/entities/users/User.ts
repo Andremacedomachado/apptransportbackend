@@ -23,4 +23,5 @@ export class User extends Entity<IUserProps>{
     }
 
 
+
 }

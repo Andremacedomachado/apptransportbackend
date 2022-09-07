@@ -8,6 +8,7 @@ import {
 import { createUserController } from './application/usecases/createUser';
 import { createPermissionController } from './application/usecases/createPermission';
 import { createRoleController } from './application/usecases/createRole';
+import { registerUserPermissionController } from './application/usecases/registerUserPermission';
 
 const routes = Router();
 
@@ -21,7 +22,7 @@ routes.post('/login', new SessionController().handle);
 routes.post('/permissions', IsAuthenticated(), (req: Request, res: Response) => {
     return createPermissionController.handle(req, res);
 });
-routes.post('/users', IsAuthenticated(), (req: Request, res: Response) => {
+routes.post('/users', (req: Request, res: Response) => {
     return createUserController.handle(req, res);
 });
 routes.post('/roles', IsAuthenticated(), (req: Request, res: Response) => {
@@ -30,7 +31,9 @@ routes.post('/roles', IsAuthenticated(), (req: Request, res: Response) => {
 
 // routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
 
-// routes.post('/roles/:roleId', IsAuthenticated(), is(['admin']), new CreateRolePermissionsController().handle);
+routes.post('/users/addPermission', IsAuthenticated(), (req: Request, res: Response) => {
+    return registerUserPermissionController.handle(req, res);
+});
 // routes.post('/users/userroles', IsAuthenticated(), is(['super_admin']), new CreateUserRolesControler().handle);
 
 
