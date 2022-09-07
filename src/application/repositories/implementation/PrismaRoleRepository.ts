@@ -12,7 +12,7 @@ export class PrismaRoleRepository implements IRoleRepository {
             data: {
                 name,
                 description,
-                createdat: createdAt,
+                createdAt,
                 updatedAt
             }
         });
@@ -28,11 +28,11 @@ export class PrismaRoleRepository implements IRoleRepository {
         if (!role) {
             return null;
         }
-        const { name, description, createdat, updatedAt } = role;
+        const { name, description, createdAt, updatedAt } = role;
         const roleInMemory = Role.create({
             name,
             description,
-            createdAt: createdat,
+            createdAt,
             updatedAt
         }, role.id);
 
@@ -47,11 +47,11 @@ export class PrismaRoleRepository implements IRoleRepository {
         if (!role) {
             return null;
         }
-        const { id, description, createdat, updatedAt } = role;
+        const { id, description, createdAt, updatedAt } = role;
         const roleInMemory = Role.create({
             name: role.name,
             description,
-            createdAt: createdat,
+            createdAt,
             updatedAt
         }, id);
 

@@ -2,94 +2,96 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
+    provider = "prisma-erd-generator"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @unique @default(uuid())
+    id String @id @unique @default(uuid())
 
-  name     String
-  email    String @unique
-  password String
+    name     String
+    email    String @unique
+    password String
 
-  createdat       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  usersRoles      UsersRoles[]
-  userPermissions UserPermissions[]
+    createdat       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+    usersRoles      UsersRoles[]
+    userPermissions UserPermissions[]
 
-  @@map("users")
+    @@map("users")
 }
 
 model UsersRoles {
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String
-  role    Roles  @relation(fields: [role_id], references: [id])
-  role_id String
+    user    User   @relation(fields: [user_id], references: [id])
+    user_id String
+    role    Roles  @relation(fields: [role_id], references: [id])
+    role_id String
 
-  createdat DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdat DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-  @@id([user_id, role_id])
-  @@map("users_roles")
+    @@id([user_id, role_id])
+    @@map("users_roles")
 }
 
 model UserPermissions {
-  user        User        @relation(fields: [user_id], references: [id])
-  permissions Permissions @relation(fields: [permissions_id], references: [id])
+    user        User        @relation(fields: [user_id], references: [id])
+    permissions Permissions @relation(fields: [permissions_id], references: [id])
 
-  user_id        String
-  permissions_id String
+    user_id        String
+    permissions_id String
+    createdAt      DateTime @default(now())
+    provider_id    String
 
-  @@id([user_id, permissions_id])
-  @@map("user_permissions")
+    @@id([user_id, permissions_id])
+    @@map("user_permissions")
 }
 
 model Roles {
-  id String @id @unique @default(uuid())
+    id String @id @unique @default(uuid())
 
-  name        String @unique
-  description String
+    name        String @unique
+    description String
 
-  createdat       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  usersRoles      UsersRoles[]
-  RolePermissions RolePermissions[]
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+    usersRoles      UsersRoles[]
+    RolePermissions RolePermissions[]
 
-  @@map("roles")
+    @@map("roles")
 }
 
 model Permissions {
-  id String @id @unique @default(uuid())
+    id String @id @unique @default(uuid())
 
-  name        String @unique
-  description String
+    name        String @unique
+    description String
 
-  createdat       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  userPermissions UserPermissions[]
-  RolePermissions RolePermissions[]
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+    userPermissions UserPermissions[]
+    RolePermissions RolePermissions[]
 
-  @@map("permisssions")
+    @@map("permisssions")
 }
 
 model RolePermissions {
-  role        Roles       @relation(fields: [role_id], references: [id])
-  permissions Permissions @relation(fields: [permissions_id], references: [id])
+    role        Roles       @relation(fields: [role_id], references: [id])
+    permissions Permissions @relation(fields: [permissions_id], references: [id])
 
-  createdat      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  role_id        String
-  permissions_id String
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    role_id        String
+    permissions_id String
 
-  @@id([role_id, permissions_id])
-  @@map("role_permissions")
+    @@id([role_id, permissions_id])
+    @@map("role_permissions")
 }

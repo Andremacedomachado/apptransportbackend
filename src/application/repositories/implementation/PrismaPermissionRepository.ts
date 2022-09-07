@@ -10,7 +10,7 @@ export class PrismaPermissionRepository implements IPermissionRepository {
             data: {
                 name,
                 description: description,
-                createdat: createdAt,
+                createdAt,
                 updatedAt,
             }
         });
@@ -30,7 +30,7 @@ export class PrismaPermissionRepository implements IPermissionRepository {
         const permissionInMemory = Permission.create({
             name: permission.name,
             description: permission.description,
-            createdAt: permission.createdat,
+            createdAt: permission.createdAt,
             updatedAt: permission.updatedAt,
         }, permission.id);
 
@@ -51,7 +51,7 @@ export class PrismaPermissionRepository implements IPermissionRepository {
         const permissionInMemory = Permission.create({
             name: permission.name,
             description: permission.description,
-            createdAt: permission.createdat,
+            createdAt: permission.createdAt,
             updatedAt: permission.updatedAt,
         }, permission.id);
 
