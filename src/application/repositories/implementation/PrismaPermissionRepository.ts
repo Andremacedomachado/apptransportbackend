@@ -57,4 +57,18 @@ export class PrismaPermissionRepository implements IPermissionRepository {
 
         return permissionInMemory;
     }
+
+    async verifyIfAllExists(permissionIds: string[]): Promise<boolean> {
+        let allExists = false;
+        const getMultPermissionFindByIds = async (permissionIds: string[]) => {
+            const permissions = permissionIds.map(async permissionId => {
+                const data = await this.findById(permissionId);
+                return data;
+            });
+            return Promise.all(permissions);
+        };
+        const permissionExist = await getMultPermissionFindByIds(permissionIds);
+        allExists = !permissionExist.some(item => item == null);
+        return allExists;
+    }
 }

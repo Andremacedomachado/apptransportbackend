@@ -9,6 +9,7 @@ import { createUserController } from './application/usecases/createUser';
 import { createPermissionController } from './application/usecases/createPermission';
 import { createRoleController } from './application/usecases/createRole';
 import { registerUserPermissionController } from './application/usecases/registerUserPermission';
+import { registerRolepermissionController } from './application/usecases/registerRolePermissions';
 
 const routes = Router();
 
@@ -28,6 +29,11 @@ routes.post('/users', (req: Request, res: Response) => {
 routes.post('/roles', IsAuthenticated(), (req: Request, res: Response) => {
     return createRoleController.handle(req, res);
 });
+
+routes.post('/roles/rolePermissions', IsAuthenticated(), (req: Request, res: Response) => {
+    return registerRolepermissionController.handle(req, res);
+});
+
 
 // routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
 
