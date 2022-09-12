@@ -10,6 +10,7 @@ import { createPermissionController } from './application/usecases/createPermiss
 import { createRoleController } from './application/usecases/createRole';
 import { registerUserPermissionController } from './application/usecases/registerUserPermission';
 import { registerRolepermissionController } from './application/usecases/registerRolePermissions';
+import { registerUserRolesController } from './application/usecases/registerUserRolesUsecase';
 
 const routes = Router();
 
@@ -18,7 +19,7 @@ const routes = Router();
 
 routes.post('/login', new SessionController().handle);
 
-// rolas de criar tabelas de pontas 
+// rotas de criar tabelas de pontas 
 
 routes.post('/permissions', IsAuthenticated(), (req: Request, res: Response) => {
     return createPermissionController.handle(req, res);
@@ -37,10 +38,15 @@ routes.post('/roles/rolePermissions', IsAuthenticated(), (req: Request, res: Res
 
 // routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
 
+// rotas de criar tabelas de registros de função
+
 routes.post('/users/addPermission', IsAuthenticated(), (req: Request, res: Response) => {
     return registerUserPermissionController.handle(req, res);
 });
-// routes.post('/users/userroles', IsAuthenticated(), is(['super_admin']), new CreateUserRolesControler().handle);
+
+routes.post('/users/addRole', IsAuthenticated(), (req: Request, res: Response) => {
+    return registerUserRolesController.handle(req, res);
+});
 
 
 export { routes };

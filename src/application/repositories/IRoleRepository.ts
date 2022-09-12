@@ -8,4 +8,5 @@ export interface IRoleRepository {
     save(role: Role): Promise<RoleId | null>,
     findById(id: string): Promise<Role | null>,
     findByName(name: string): Promise<Role | null>,
+    verifyIfAllExists(roleIds: string[]): Promise<boolean>,
 }

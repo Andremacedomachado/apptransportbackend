@@ -58,4 +58,18 @@ export class PrismaRoleRepository implements IRoleRepository {
         return roleInMemory;
     }
 
+    async verifyIfAllExists(roleIds: string[]): Promise<boolean> {
+        let allExists = false;
+        const getMultPermissionFindByIds = async (roleIds: string[]) => {
+            const roles = roleIds.map(async roleId => {
+                const data = await this.findById(roleId);
+                return data;
+            });
+            return Promise.all(roles);
+        };
+        const permissionExist = await getMultPermissionFindByIds(roleIds);
+        allExists = !permissionExist.some(item => item == null);
+        return allExists;
+    }
+
 }
