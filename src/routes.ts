@@ -10,7 +10,7 @@ import { createPermissionController } from './application/usecases/createPermiss
 import { createRoleController } from './application/usecases/createRole';
 import { registerUserPermissionController } from './application/usecases/registerUserPermission';
 import { registerRolepermissionController } from './application/usecases/registerRolePermissions';
-import { registerUserRolesController } from './application/usecases/registerUserRolesUsecase';
+import { registerUserRolesController } from './application/usecases/registerUserRoles';
 
 const routes = Router();
 
