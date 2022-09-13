@@ -60,4 +60,22 @@ export class PrismaUserRepository implements IUserRepository {
         return userInMemory;
     }
 
+    async findAll(): Promise<User[] | null> {
+        const users = await prisma.user.findMany({});
+        if (users.length < 1) {
+            return null;
+        }
+        const userCollection = [] as User[];
+        users.forEach((user) => {
+            const userInMemory = User.create({
+                name: user.name,
+                email: user.email,
+                createdAt: user.createdat,
+                updatedAt: user.updatedAt,
+                password: user.password
+            }, user.id);
+            userCollection.push(userInMemory);
+        });
+        return userCollection;
+    }
 }

@@ -11,11 +11,17 @@ import { createRoleController } from './application/usecases/createRole';
 import { registerUserPermissionController } from './application/usecases/registerUserPermission';
 import { registerRolepermissionController } from './application/usecases/registerRolePermissions';
 import { registerUserRolesController } from './application/usecases/registerUserRoles';
+import { getAllUsersController } from './application/usecases/getAllUsers';
 
 const routes = Router();
 
-// routes.get('/users', new GetAllUsersController().handle);
+// rotas de obtenção de dados de entidades
 
+routes.get('/users', IsAuthenticated(), (req: Request, res: Response) => {
+    return getAllUsersController.handle(req, res);
+});
+
+// rota de autenticação
 
 routes.post('/login', new SessionController().handle);
 
