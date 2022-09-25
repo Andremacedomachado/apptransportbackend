@@ -12,6 +12,7 @@ import { registerUserPermissionController } from './application/usecases/registe
 import { registerRolepermissionController } from './application/usecases/registerRolePermissions';
 import { registerUserRolesController } from './application/usecases/registerUserRoles';
 import { getAllUsersController } from './application/usecases/getAllUsers';
+import { getUserRolesController } from './application/usecases/getUserRoles';
 
 const routes = Router();
 
@@ -19,6 +20,11 @@ const routes = Router();
 
 routes.get('/users', IsAuthenticated(), (req: Request, res: Response) => {
     return getAllUsersController.handle(req, res);
+});
+
+routes.get('/users/roles/:userId', IsAuthenticated(), (req: Request, res: Response) => {
+    console.log(req.params);
+    return getUserRolesController.handle(req, res);
 });
 
 // rota de autenticação
@@ -40,9 +46,6 @@ routes.post('/roles', IsAuthenticated(), (req: Request, res: Response) => {
 routes.post('/roles/rolePermissions', IsAuthenticated(), (req: Request, res: Response) => {
     return registerRolepermissionController.handle(req, res);
 });
-
-
-// routes.get('/users/roles', IsAuthenticated(), new UserController().handle);
 
 // rotas de criar tabelas de registros de função
 
